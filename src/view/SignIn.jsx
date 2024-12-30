@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Box, TextField, Button, CircularProgress } from '@mui/material';
-import api from '../services/api';
+import api from '../../services/api';
+import useCustomNavigate from '../../hooks/useCustomNagivates';
 
-function Login() {
+function SignIn() {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState({ email: '', password: '', general: '' });
   const [isLoading, setIsLoading] = useState(false);
+  const {goTo} = useCustomNavigate();
 
   // Função para atualizar os campos do formulário
   const handleChange = (e) => {
@@ -83,8 +85,8 @@ function Login() {
     >
       {/* Exibe o erro geral, se houver */}
       {errors.general && <div style={{ color: 'red', textAlign: 'center', marginBottom: '10px' }}>{errors.general}</div>}
-
-      {/* Campo de email */}
+      
+      <h2>Login</h2>
       <TextField
         fullWidth
         id="email"
@@ -99,7 +101,6 @@ function Login() {
         required
       />
       
-      {/* Campo de senha */}
       <TextField
         fullWidth
         id="password"
@@ -115,7 +116,10 @@ function Login() {
         required
       />
       
-      {/* Botão de login */}
+      <Button
+        onClick={() => goTo('/signup')}>
+        Não possui uma conta? Clique aqui.
+      </Button>
       <Button
         fullWidth
         variant="contained"
@@ -129,4 +133,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default SignIn;

@@ -1,5 +1,6 @@
-import { Typography, Button } from '@mui/material';
+import { Typography, Button, Card } from '@mui/material';
 import { styled } from '@mui/system';
+
 
 // Título reutilizável para ambos os cards
 export const CardTitle = styled(Typography)(({ theme }) => ({
@@ -26,5 +27,17 @@ export const CardButton = styled(Button)(({ theme }) => ({
   textTransform: 'none',
   '&:hover': {
     backgroundColor: theme.palette.primary.dark,
+  },
+}));
+
+// Estilo reutilizável para ambos os cards
+export const StyledCard = styled(Card)(({ theme }) => ({
+  borderRadius: '16px',
+  boxShadow: theme.shadows[5],
+  maxWidth: 400,
+  margin: '20px auto',
+  transition: 'transform 0.3s ease',
+  '&:hover': {
+    transform: 'scale(1.05)',
   },
 }));

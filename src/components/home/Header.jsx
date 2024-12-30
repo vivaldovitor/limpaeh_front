@@ -11,17 +11,17 @@ const Title = styled(Typography)(() => ({
   fontSize: '1.8rem',
   color: '#fff',
   letterSpacing: '2px',
-  textShadow: '2px 2px 5px rgba(0, 0, 0, 0.2)', // Sombra para dar destaque
+  textShadow: '2px 2px 5px rgba(0, 0, 0, 0.2)',
 }));
 
 const StyledButton = styled(Button)(({ theme }) => ({
   color: '#fff',
-  backgroundColor: theme.palette.primary.main, // Usando a cor primária do tema
+  backgroundColor: theme.palette.primary.main, 
   padding: '8px 20px',
   borderRadius: '30px',
   transition: 'background-color 0.3s ease',
   '&:hover': {
-    backgroundColor: theme.palette.secondary.main, // Usando a cor secundária do tema
+    backgroundColor: theme.palette.secondary.main, 
   },
 }));
 

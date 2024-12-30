@@ -1,20 +1,14 @@
 import React from 'react';
-import { Card, CardContent } from '@mui/material';
+import { CardContent } from '@mui/material';
 import { CardTitle, CardDescription, CardButton } from '/src/styles/CardStyles.js'; 
-import { styled } from '@mui/system';
+import { StyledCard } from '../../styles/CardStyles';
+import useCustomNavigate from "/src/hooks/useCustomNagivates";
 
-const StyledCard = styled(Card)(({ theme }) => ({
-  borderRadius: '16px',
-  boxShadow: theme.shadows[5],
-  maxWidth: 400,
-  margin: '20px auto',
-  transition: 'transform 0.3s ease',
-  '&:hover': {
-    transform: 'scale(1.05)',
-  },
-}));
+
 
 function FeaturesCard() {
+  const { goTo } = useCustomNavigate();
+
   return (
     <StyledCard>
       <CardContent>
@@ -26,7 +20,11 @@ function FeaturesCard() {
           - Relatórios detalhados<br />
           - Monitoramento em tempo real
         </CardDescription>
-        <CardButton variant="contained" color="secondary" style={{ marginTop: '10px' }}>
+        <CardButton
+          variant="contained"
+          color="secondary" 
+          style={{ marginTop: '10px' }}
+          onClick={() => goTo('/signup')}>
           Começar Agora
         </CardButton>
       </CardContent>

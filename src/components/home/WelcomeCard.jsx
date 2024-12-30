@@ -1,18 +1,8 @@
 import React from 'react';
-import { Card, CardContent } from '@mui/material';
+import { CardContent } from '@mui/material';
 import { CardTitle, CardDescription, CardButton } from '/src/styles/CardStyles.js';
-import { styled } from '@mui/system';
+import { StyledCard } from '../../styles/CardStyles';
 
-const StyledCard = styled(Card)(({ theme }) => ({
-  borderRadius: '16px',
-  boxShadow: theme.shadows[5],
-  maxWidth: 400,
-  margin: '20px auto',
-  transition: 'transform 0.3s ease',
-  '&:hover': {
-    transform: 'scale(1.05)',
-  },
-}));
 
 function WelcomeCard() {
   return (
