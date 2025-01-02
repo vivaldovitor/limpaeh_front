@@ -1,7 +1,6 @@
 import React from 'react';
 import { CardContent } from '@mui/material';
-import { CardTitle, CardDescription, CardButton } from '/src/styles/CardStyles.js';
-import { StyledCard } from '../../styles/CardStyles';
+import { CardTitle, CardDescription, CardButton, StyledCard } from '/src/styles/CardStyles.js';
 
 
 function WelcomeCard() {

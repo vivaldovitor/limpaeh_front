@@ -2,7 +2,7 @@ import { Typography, Button, Card } from '@mui/material';
 import { styled } from '@mui/system';
 
 
-// Título reutilizável para ambos os cards
+// Título reutilizável para os cards
 export const CardTitle = styled(Typography)(({ theme }) => ({
   fontSize: '1.8rem',
   fontWeight: 'bold',
@@ -10,7 +10,7 @@ export const CardTitle = styled(Typography)(({ theme }) => ({
   marginBottom: '16px',
 }));
 
-// Descrição reutilizável para ambos os cards
+// Descrição reutilizável para os cards
 export const CardDescription = styled(Typography)(({ theme }) => ({
   fontSize: '1rem',
   color: theme.palette.text.primary,
@@ -18,7 +18,7 @@ export const CardDescription = styled(Typography)(({ theme }) => ({
   lineHeight: '1.6',
 }));
 
-// Botão reutilizável para ambos os cards
+// Botão reutilizável para os cards
 export const CardButton = styled(Button)(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
   color: '#fff',
@@ -30,7 +30,7 @@ export const CardButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-// Estilo reutilizável para ambos os cards
+// Estilo reutilizável para os cards
 export const StyledCard = styled(Card)(({ theme }) => ({
   borderRadius: '16px',
   boxShadow: theme.shadows[5],

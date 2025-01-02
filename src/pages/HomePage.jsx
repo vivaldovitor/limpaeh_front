@@ -1,10 +1,10 @@
 import React from 'react';
 import { Box } from '@mui/material';
-import Header from '../components/home/Header';
-import WelcomeCard from '../components/home/WelcomeCard';
-import FeaturesCard from '../components/home/FeaturesCard';
+import Header from '../components/home/header/Header';
+import WelcomeCard from '../components/home/card/WelcomeCard';
+import FeaturesCard from '../components/home/card/FeaturesCard';
 
-function Home() {
+function HomePage() {
   return (
     <div>
       <Header />
@@ -20,4 +20,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default HomePage;

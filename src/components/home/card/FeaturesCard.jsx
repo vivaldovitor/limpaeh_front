@@ -1,10 +1,7 @@
 import React from 'react';
 import { CardContent } from '@mui/material';
-import { CardTitle, CardDescription, CardButton } from '/src/styles/CardStyles.js'; 
-import { StyledCard } from '../../styles/CardStyles';
+import { CardTitle, CardDescription, CardButton, StyledCard } from '/src/styles/CardStyles.js';
 import useCustomNavigate from "/src/hooks/useCustomNagivates";
-
-
 
 function FeaturesCard() {
   const { goTo } = useCustomNavigate();
@@ -24,7 +21,7 @@ function FeaturesCard() {
           variant="contained"
           color="secondary" 
           style={{ marginTop: '10px' }}
-          onClick={() => goTo('/signup')}>
+          onClick={() => goTo('/login')}>
           Começar Agora
         </CardButton>
       </CardContent>

@@ -1,13 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './pages/Home';
-import SignIn from './components/view/SignIn';
-import Dashboard from './pages/Dashboard';
-import theme from './styles/GlobalTheme';
 import { ThemeProvider } from '@emotion/react';
+import theme from './styles/GlobalTheme';
 import { AuthProvider } from './context/AuthContext';
-import ProtectedRoute from './components/route/ProtectedRoute';
-import SignUp from './components/view/SignUp';
+import routes from './routes';
 
 function App() {
   return (
@@ -15,13 +11,24 @@ function App() {
       <AuthProvider>
         <Router>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<SignIn />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/dashboard" element={<ProtectedRoute>
-              <Dashboard/>
-            </ProtectedRoute>} />
-            
+            {routes.map((route, index) => {
+              if (route.children) {
+                return (
+                  <Route key={index} path={route.path} element={route.element}>
+                    {route.children.map((child, childIndex) => (
+                      <Route
+                        key={childIndex}
+                        path={child.path}
+                        element={child.element}
+                      />
+                    ))}
+                  </Route>
+                );
+              }
+              return (
+                <Route key={index} path={route.path} element={route.element} />
+              );
+            })}
           </Routes>
         </Router>
       </AuthProvider>
