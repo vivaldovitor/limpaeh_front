@@ -5,7 +5,9 @@ function CadastrarFuncionario() {
   const fields = [
     { name: 'nome', label: 'Nome' },
     { name: 'email', label: 'Email', type: 'email' },
-    { name: 'senha', label: 'Senha', type: 'password' }
+    { name: 'senha', label: 'Senha', type: 'password' },
+    { name: 'tipo_id', label: 'Tipo', type: 'select' },  
+    { name: 'empresa_id', label: 'Empresa', type: 'select' }
   ];
 
   return (

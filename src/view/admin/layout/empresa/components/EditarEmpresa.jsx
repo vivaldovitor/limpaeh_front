@@ -1,7 +1,10 @@
 import React from 'react';
-import EditarForm from './EditarForm';
+import { useParams } from 'react-router-dom';
+import EditarForm from '../../../../../components/form/EditarForm';
 
-function EditarEmpresa({ empresaId, onUpdate }) {
+function EditarEmpresa({ onUpdate }) {
+  const { empresaId } = useParams();
+
   const fields = [
     { name: 'nome', label: 'Nome' },
     { name: 'nomeFantasia', label: 'Nome Fantasia' },

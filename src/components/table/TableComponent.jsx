@@ -7,6 +7,13 @@ function TableComponent({ dados, handleExcluir, tipo, cadastrarUrl, editarUrl })
     key.charAt(0).toUpperCase() + key.slice(1)
   );
 
+  const confirmarExclusao = (id) => {
+    const confirmacao = window.confirm('Tem certeza que deseja excluir este item?');
+    if (confirmacao) {
+      handleExcluir(id); // Chama a função de exclusão se o usuário confirmar
+    }
+  };
+
   return (
     <Box sx={{ padding: '20px' }}>
       <h2>{tipo} Cadastrados</h2>
@@ -51,7 +58,7 @@ function TableComponent({ dados, handleExcluir, tipo, cadastrarUrl, editarUrl })
                 <Button
                   variant="outlined"
                   color="error"
-                  onClick={() => handleExcluir(item.id)}
+                  onClick={() => confirmarExclusao(item.id)} // Chama a função de confirmação
                 >
                   Excluir
                 </Button>

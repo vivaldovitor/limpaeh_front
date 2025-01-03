@@ -8,7 +8,7 @@ function EmpresasTable({ empresas, handleExcluirEmpresa }) {
       handleExcluir={handleExcluirEmpresa}
       tipo="Empresa"
       cadastrarUrl="/admin/empresas/cadastrar"
-      editarUrl="/admin/empresas/editar"
+      editarUrl="/admin/empresa/editar"
     />
   );
 }

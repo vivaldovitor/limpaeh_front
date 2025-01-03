@@ -8,7 +8,7 @@ function FuncionariosTable({ funcionarios, handleExcluirFuncionario }) {
       handleExcluir={handleExcluirFuncionario}
       tipo="Funcionário"
       cadastrarUrl="/admin/funcionarios/cadastrar"
-      editarUrl="/admin/funcionarios/editar"
+      editarUrl="/admin/funcionario/editar"
     />
   );
 }

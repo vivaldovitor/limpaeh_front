@@ -16,6 +16,8 @@ import FuncionariosAdmin from './view/admin/layout/funcionario/FuncionariosAdmin
 import EmpresasAdmin from './view/admin/layout/empresa/EmpresasAdmin';
 import CadastrarEmpresa from './view/admin/layout/empresa/components/CadastrarEmpresa';
 import CadastrarFuncionario from './view/admin/layout/funcionario/components/CadastrarFuncionario';
+import EditarFuncionario from './view/admin/layout/funcionario/components/EditarFuncionario';
+import EditarEmpresa from './view/admin/layout/empresa/components/EditarEmpresa';
 
 const routes = [
   {
@@ -68,6 +70,18 @@ const routes = [
         icon: MdSettings,
         element: <CadastrarEmpresa />,
       },
+      {
+        name: 'Editar Funcionário',
+        path: 'funcionario/editar/:funcionarioId',
+        icon: MdSettings,
+        element: <EditarFuncionario />,
+      },
+      {
+        name: 'Editar Empresa',
+        path: 'empresa/editar/:empresaId',
+        icon: MdSettings,
+        element: <EditarEmpresa />,
+      }         
     ],
   },
 ];
