@@ -12,13 +12,13 @@ function EditarFuncionario({ onUpdate }) {
       type: 'text',
     },
     {
-      name: 'tipo',
+      name: 'tipo_id',
       label: 'Tipo',
       type: 'select',
       optionsUrl: '/tipos_funcionarios',
     },
     {
-      name: 'empresa',
+      name: 'empresa_id',
       label: 'Empresa',
       type: 'select',
       optionsUrl: '/empresas',

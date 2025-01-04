@@ -1,5 +1,5 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom'; // Importe o Outlet
+import { Outlet } from 'react-router-dom';
 import Sidebar from '../../../components/sidebar/Sidebar';
 import { Box } from '@mui/material';
 

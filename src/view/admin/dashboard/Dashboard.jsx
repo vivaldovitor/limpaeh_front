@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Grid2, Typography, CircularProgress } from '@mui/material';
+import { Box, Grid2, CircularProgress } from '@mui/material';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import AtividadesRecentes from './components/cards/AtividadesRecentes';
 import NumeroFuncionarios from './components/cards/NumeroFuncionarios';

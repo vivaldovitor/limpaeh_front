@@ -3,20 +3,22 @@ import { Box, Button, Table, TableBody, TableCell, TableHead, TableRow } from '@
 import { Link } from 'react-router-dom';
 
 function TableComponent({ dados, handleExcluir, tipo, cadastrarUrl, editarUrl }) {
+
   const colunas = Object.keys(dados[0] || {}).map((key) =>
     key.charAt(0).toUpperCase() + key.slice(1)
   );
+    
 
   const confirmarExclusao = (id) => {
     const confirmacao = window.confirm('Tem certeza que deseja excluir este item?');
     if (confirmacao) {
-      handleExcluir(id); // Chama a função de exclusão se o usuário confirmar
+      handleExcluir(id);
     }
   };
 
   return (
     <Box sx={{ padding: '20px' }}>
-      <h2>{tipo} Cadastrados</h2>
+      <h2>Cadastrado de {tipo}</h2>
       <Button
         variant="contained"
         color="primary"
@@ -24,7 +26,7 @@ function TableComponent({ dados, handleExcluir, tipo, cadastrarUrl, editarUrl })
         component={Link}
         to={cadastrarUrl}
       >
-        Cadastrar Novo {tipo}
+        Cadastrar {tipo}
       </Button>
       <Table>
         <TableHead>

@@ -12,7 +12,6 @@ export const AuthProvider = ({ children }) => {
     if (token) {
       try {
         const decoded = jwtDecode(token);
-        console.log(decoded); 
         setUser({
           ...decoded.sub,  
           isAdmin: decoded.sub.tipo_id === 1

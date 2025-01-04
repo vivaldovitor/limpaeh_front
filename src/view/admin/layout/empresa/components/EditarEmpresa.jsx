@@ -7,7 +7,7 @@ function EditarEmpresa({ onUpdate }) {
 
   const fields = [
     { name: 'nome', label: 'Nome' },
-    { name: 'nomeFantasia', label: 'Nome Fantasia' },
+    { name: 'nome_fantasia', label: 'Nome Fantasia' },
     { name: 'cnpj', label: 'CNPJ' },
     { name: 'contato', label: 'Contato' },
     { name: 'endereco', label: 'Endereço' },
