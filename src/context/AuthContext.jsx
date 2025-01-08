@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { jwtDecode } from 'jwt-decode'; 
+import { jwtDecode } from 'jwt-decode'; // Corrigido para remover chaves
 
 export const AuthContext = createContext();
 
@@ -12,18 +12,46 @@ export const AuthProvider = ({ children }) => {
     if (token) {
       try {
         const decoded = jwtDecode(token);
+        
+        if (decoded.exp * 1000 < Date.now()) {
+          logout();
+          return;
+        }
+
+        const { id, email, tipo_id: tipoId } = decoded.sub;
+
         setUser({
-          ...decoded.sub,  
-          isAdmin: decoded.sub.tipo_id === 1
+          id,
+          email,
+          tipoId,
+          isAdmin: tipoId === 1,
+          isSupervisor: tipoId === 2,
+          isFuncionario: tipoId === 3,
         });
       } catch (error) {
         console.error('Erro ao decodificar o token:', error);
         logout();
       }
+    } else {
+      setUser(null);
     }
     setLoading(false);
   }, []);
-  
+
+  const setTokenAndUser = (token) => {
+    localStorage.setItem('token', token);
+    const decoded = jwtDecode(token);
+    const { id, email, tipo_id: tipoId } = decoded.sub;
+
+    setUser({
+      id,
+      email,
+      tipoId,
+      isAdmin: tipoId === 1,
+      isSupervisor: tipoId === 2,
+      isFuncionario: tipoId === 3,
+    });
+  };
 
   const logout = () => {
     localStorage.removeItem('token');
@@ -31,8 +59,10 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, logout }}>
+    <AuthContext.Provider value={{ user, loading, logout, setTokenAndUser }}>
       {loading ? <div>Carregando...</div> : children}
     </AuthContext.Provider>
   );
 };
+
+export const useAuth = () => React.useContext(AuthContext);

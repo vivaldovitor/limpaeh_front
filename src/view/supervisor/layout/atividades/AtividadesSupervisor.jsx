@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../../../services/api';
-import AtividadesTableAdmin from './components/Atividades';
+import AtividadesTableSupervisor from './components/Atividades';
 import ExcluirItem from '../excluir';
 import Header from '../../../../components/header/Header';
 
-function AtividadesAdmin() {
+function AtividadesSupervisor() {
   const [atividades, setAtividades] = useState([]);
 
   useEffect(() => {
@@ -31,7 +31,7 @@ function AtividadesAdmin() {
   return (
     <>
       <Header titulo="Limpaeh - Atividades"/>
-      <AtividadesTableAdmin 
+      <AtividadesTableSupervisor 
         atividades={atividades} 
         handleExcluirAtividade={handleExcluirAtividade}
       />
@@ -39,4 +39,4 @@ function AtividadesAdmin() {
   );
 }
 
-export default AtividadesAdmin;
+export default AtividadesSupervisor;

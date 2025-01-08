@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import { Box, TextField, Button, CircularProgress } from '@mui/material';
 import api from '../../services/api';
-import useCustomNavigate from '../../hooks/useCustomNagivates';
+import useCustomNavigate from '../../hooks/useCustomNagivate.js';
+import { useAuth } from '../../context/AuthContext';
+import { jwtDecode } from 'jwt-decode';
+import { GoTypography } from 'react-icons/go';
 
 function SignIn() {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState({ email: '', password: '', general: '' });
   const [isLoading, setIsLoading] = useState(false);
+  const { user, setTokenAndUser } = useAuth();
   const { goTo } = useCustomNavigate();
 
   const handleChange = (e) => {
@@ -34,7 +38,6 @@ function SignIn() {
 
     if (valid) {
       setIsLoading(true);
-      console.log('Dados do formulário:', formData);
 
       try {
         const response = await api.post('/login', {
@@ -42,12 +45,19 @@ function SignIn() {
           senha: formData.password,
         });
 
-        console.log('Login bem-sucedido:', response.data);
         alert('Login realizado com sucesso!');
-        localStorage.setItem('token', response.data.token); 
+        setTokenAndUser(response.data.token);
+        const decoded = jwtDecode(response.data.token)
 
-        
-        goTo('/admin'); 
+        if (decoded.sub.tipo_id === 1) {
+          goTo('/admin');
+        } else if (decoded.sub.tipo_id === 2) {
+          goTo('/supervisor');
+        } else if (decoded.sub.tipo_id === 3) {
+          goTo('/unauthorized');
+        }
+           
+
       } catch (error) {
         console.error('Erro ao fazer login:', error.response?.data || error.message);
 
@@ -125,6 +135,16 @@ function SignIn() {
         disabled={isLoading}
       >
         {isLoading ? <CircularProgress size={24} /> : 'Entrar'}
+      </Button>
+      <Button
+        fullWidth
+        variant="outlined"
+        type="button"
+        color="secondary"
+        sx={{ mt: 2 }}
+        onClick={() => goTo('/')}
+      >
+        Voltar
       </Button>
     </Box>
   );

@@ -1,7 +1,7 @@
 import React from 'react';
 import { CardContent } from '@mui/material';
 import { CardTitle, CardDescription, CardButton, StyledCard } from '/src/styles/CardStyles.js';
-import useCustomNavigate from "/src/hooks/useCustomNagivates";
+import useCustomNavigate from "/src/hooks/useCustomNagivate.js";
 
 function FeaturesCard() {
   const { goTo } = useCustomNavigate();

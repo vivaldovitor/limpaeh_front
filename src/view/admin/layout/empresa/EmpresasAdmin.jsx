@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import api from '../../../../services/api';
 import EmpresasTable from './components/Empresas';
 import ExcluirItem from '../excluir';
-import EmpresaHeader from './components/header/EmpresaHeader';
+import Header from '../../../../components/header/Header';
 
 function EmpresasAdmin() {
   const [empresas, setEmpresas] = useState([]);
@@ -11,7 +11,6 @@ function EmpresasAdmin() {
     const fetchEmpresas = async () => {
       try {
         const response = await api.get('/empresas');
-        console.log('Resposta da API:', response.data);
         if (Array.isArray(response.data.empresas)) {
           setEmpresas(response.data.empresas);
         } else {
@@ -31,7 +30,7 @@ function EmpresasAdmin() {
 
   return (
     <>
-    <EmpresaHeader/>
+    <Header titulo="Limpaeh - Empresas"/>
     <EmpresasTable 
       empresas={empresas} 
       handleExcluirEmpresa={handleExcluirEmpresa}

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../../../services/api';
-import SolicitacoesTable from './components/Solicitacoes';
+import SolicitacoesTable from '../../../supervisor/layout/solicitacoes/components/Solicitacoes';
 import ExcluirItem from '../excluir';
 import Header from '../../../../components/header/Header';
 
-function SolicitacoesAdmin() {
+function SolicitacoesSupervisor() {
   const [solicitacoes, setSolicitacoes] = useState([]);
 
   useEffect(() => {
@@ -39,4 +39,4 @@ function SolicitacoesAdmin() {
   );
 }
 
-export default SolicitacoesAdmin;
+export default SolicitacoesSupervisor;

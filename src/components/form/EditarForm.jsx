@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button, TextField, FormControl, FormLabel, Select, MenuItem } from '@mui/material';
 import api from '../../services/api';
-import useCustomNavigates from '../../hooks/useCustomNagivates.js';
+import useCustomNavigate from '../../hooks/useCustomNagivate.js';
 import useLoadOptions from '../../hooks/useLoadOptions.js';
 
-function EditarForm({ fields, submitUrl, successMessage, errorMessage, id }) {
+function EditarForm({ fields, submitUrl, successMessage, errorMessage, id, cancelUrl }) {
   const initialState = fields.reduce((acc, field) => ({ ...acc, [field.name]: '' }), {});
   const [formData, setFormData] = useState(initialState);
   const [error, setError] = useState('');
   const { tipos, empresas, funcionarios, supervisores, setor_admin, ambientes, loadingOptions, error: loadError } = useLoadOptions();
-  const { goTo } = useCustomNavigates();
+  const { goTo } = useCustomNavigate();  
+
+  console.log(cancelUrl);
+  
 
   useEffect(() => {
     const loadData = async () => {
@@ -43,14 +46,14 @@ function EditarForm({ fields, submitUrl, successMessage, errorMessage, id }) {
     try {
       await api.put(`${submitUrl}/${id}`, formData);
       alert(successMessage);
-      goTo('/admin/dashboard');
+      goTo(cancelUrl);
     } catch (err) {
       setError(errorMessage);
     }
   };
 
   const handleCancel = () => {
-    goTo('/admin/dashboard');
+    goTo(cancelUrl);
   };
 
   if (loadingOptions) return <p>Carregando opções...</p>;
@@ -114,6 +117,7 @@ function EditarForm({ fields, submitUrl, successMessage, errorMessage, id }) {
         variant="contained"
         color="primary"
         fullWidth
+        sx = {{ mt: 3 }}
         onClick={handleSubmit}
       >
         Atualizar
@@ -122,6 +126,7 @@ function EditarForm({ fields, submitUrl, successMessage, errorMessage, id }) {
         variant="outlined"
         color="secondary"
         fullWidth
+        sx = {{ mt: 2 }}
         onClick={handleCancel}
       >
         Cancelar

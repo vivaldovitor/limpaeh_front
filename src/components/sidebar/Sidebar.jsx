@@ -1,25 +1,10 @@
 import React from 'react';
 import { Drawer, List, ListItem, ListItemIcon, ListItemText, Toolbar, Box } from '@mui/material';
 import { Link } from 'react-router-dom';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import PeopleIcon from '@mui/icons-material/People';
-import SettingsIcon from '@mui/icons-material/Settings';
-import BusinessIcon from '@mui/icons-material/Business';
-import AssignmentIcon from '@mui/icons-material/Assignment';
-import PostAddIcon from '@mui/icons-material/PostAdd';
 
 const drawerWidth = 240;
 
-const Sidebar = () => {
-  const menuItems = [
-    { text: 'Dashboard', icon: <DashboardIcon />, path: '/admin/dashboard' },
-    { text: 'Funcionários', icon: <PeopleIcon />, path: '/admin/funcionarios' },
-    { text: 'Empresas', icon: <BusinessIcon />, path: '/admin/empresas' },
-    { text: 'Atividades', icon: <AssignmentIcon />, path: '/admin/atividades' },
-    { text: 'Solicitações de Atividades', icon: <PostAddIcon/>, path: '/admin/solicitacoes' },
-    { text: 'Configurações', icon: <SettingsIcon />, path: '/admin/configuracoes' }
-  ];
-
+const Sidebar = ({ menuItems }) => {
   return (
     <Drawer
       variant="permanent"

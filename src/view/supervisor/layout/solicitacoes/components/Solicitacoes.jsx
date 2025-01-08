@@ -7,9 +7,9 @@ function SolicitacoesTable({ solicitacoes, handleExcluirSolicitacao }) {
       dados={solicitacoes}
       handleExcluir={handleExcluirSolicitacao}
       tipo="Solicitações"
-      cadastrarUrl="/admin/solicitacoes/cadastrar"
-      editarUrl="/admin/solicitacao/editar"
-      isAdmin={true}
+      cadastrarUrl="/supervisor/solicitacoes/cadastrar"
+      editarUrl="/supervisor/solicitacao/editar"
+      isAdmin={false}
     />
   );
 }

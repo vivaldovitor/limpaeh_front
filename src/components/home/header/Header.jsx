@@ -1,6 +1,6 @@
 import React from 'react';
 import { AppBar, Toolbar, Button, Box } from '@mui/material';
-import useCustomNavigate from '../../../hooks/useCustomNagivates';
+import useCustomNavigate from '../../../hooks/useCustomNagivate.js';
 import { Title, StyledButton } from '/src/styles/Toolbar.js'
 
 function Header() {

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import api from '../../../../services/api';
 import FuncionariosTable from './components/Funcionarios';
 import ExcluirItem from '../excluir';
-import FuncionarioHeader from './components/header/FuncionarioHeader';
+import Header from '../../../../components/header/Header';
 
 function FuncionariosAdmin() {
   const [funcionarios, setFuncionarios] = useState([]);
@@ -11,7 +11,6 @@ function FuncionariosAdmin() {
     const fetchFuncionarios = async () => {
       try {
         const response = await api.get('/funcionarios');
-        console.log('Resposta da API:', response.data);
         if (Array.isArray(response.data.funcionarios)) {
           setFuncionarios(response.data.funcionarios);
         } else {
@@ -31,7 +30,7 @@ function FuncionariosAdmin() {
 
   return (
     <>
-    <FuncionarioHeader/>
+    <Header titulo="Limpaeh - Funcionários"/>
     <FuncionariosTable 
       funcionarios={funcionarios} 
       handleExcluirFuncionario={handleExcluirFuncionario}

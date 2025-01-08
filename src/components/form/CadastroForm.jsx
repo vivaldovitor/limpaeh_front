@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import { Box, Button, TextField, FormControl, FormLabel, Select, MenuItem } from '@mui/material';
 import useLoadOptions from '../../hooks/useLoadOptions.js';
-import useCustomNavigate from '../../hooks/useCustomNagivates.js';
+import useCustomNavigate from '../../hooks/useCustomNagivate.js';
 import api from '../../services/api';
 
-function CadastroForm({ fields, submitUrl, successMessage, errorMessage }) {
+function CadastroForm({ fields, submitUrl, successMessage, errorMessage, cancelUrl }) {
   const initialState = fields.reduce((acc, field) => ({ ...acc, [field.name]: '' }), {});
   const [formData, setFormData] = useState(initialState);
   const [error, setError] = useState('');
   const { tipos, empresas, funcionarios, supervisores, setor_admin, ambientes, solicitacoes, loadingOptions, error: loadError } = useLoadOptions();
   const { goTo } = useCustomNavigate();
+
+  console.log(cancelUrl);
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,14 +28,14 @@ function CadastroForm({ fields, submitUrl, successMessage, errorMessage }) {
       await api.post(submitUrl, formData);
       alert(successMessage);
       setFormData(initialState);
-      goTo('/admin/dashboard');
+      goTo(cancelUrl);
     } catch (err) {
       setError(errorMessage);
     }
   };
 
   const handleCancel = () => {
-    goTo('/admin/dashboard');
+    goTo(cancelUrl);
   };
 
   const renderField = (field) => {
@@ -95,6 +98,7 @@ function CadastroForm({ fields, submitUrl, successMessage, errorMessage }) {
         variant="contained"
         color="primary"
         fullWidth
+        sx = {{ mt: 3 }}
         onClick={handleSubmit}
       >
         Cadastrar
@@ -103,6 +107,7 @@ function CadastroForm({ fields, submitUrl, successMessage, errorMessage }) {
         variant="outlined"
         color="secondary"
         fullWidth
+        sx = {{ mt: 2 }}
         onClick={handleCancel}
       >
         Cancelar

@@ -6,9 +6,10 @@ function EmpresasTable({ empresas, handleExcluirEmpresa }) {
     <TableComponent
       dados={empresas}
       handleExcluir={handleExcluirEmpresa}
-      tipo="Empresa"
+      tipo="Empresas"
       cadastrarUrl="/admin/empresas/cadastrar"
       editarUrl="/admin/empresa/editar"
+      isAdmin={true}
     />
   );
 }

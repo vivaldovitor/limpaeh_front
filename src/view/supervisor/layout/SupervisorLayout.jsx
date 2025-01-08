@@ -1,12 +1,12 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { Box } from '@mui/material';
-import AdminSidebar from '../siderbar/AdminSidebar';
+import SupervisorSidebar from '../sidebar/SupervisorSidebar';
 
-const AdminLayout = () => {
+const SupervisorLayout = () => {
   return (
     <Box sx={{ display: 'flex' }}>
-      <AdminSidebar />
+      <SupervisorSidebar />
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <Outlet />
       </Box>
@@ -14,4 +14,4 @@ const AdminLayout = () => {
   );
 };
 
-export default AdminLayout;
+export default SupervisorLayout;

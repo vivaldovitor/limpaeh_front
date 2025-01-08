@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import EditarForm from '../../../../../components/form/EditarForm';
 
-function EditarAtividade({ onUpdate }) {
+function EditarAtividadeSupervisor({ onUpdate }) {
   const { atividadeId } = useParams();
 
   const fields = [
@@ -21,9 +21,9 @@ function EditarAtividade({ onUpdate }) {
       errorMessage="Erro ao atualizar a atividade."
       id={atividadeId}
       onSubmit={onUpdate}
-      cancelUrl="/admin/dashboard"
+      cancelUrl="/supervisor/dashboard"
     />
   );
 }
 
-export default EditarAtividade;
+export default EditarAtividadeSupervisor;

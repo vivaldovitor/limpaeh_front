@@ -6,9 +6,10 @@ function FuncionariosTable({ funcionarios, handleExcluirFuncionario }) {
     <TableComponent
       dados={funcionarios}
       handleExcluir={handleExcluirFuncionario}
-      tipo="Funcionário"
+      tipo="Funcionários"
       cadastrarUrl="/admin/funcionarios/cadastrar"
       editarUrl="/admin/funcionario/editar"
+      isAdmin={true}
     />
   );
 }

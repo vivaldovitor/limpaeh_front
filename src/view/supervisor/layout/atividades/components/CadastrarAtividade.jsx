@@ -1,7 +1,7 @@
 import React from 'react';
 import CadastroForm from '../../../../../components/form/CadastroForm';
 
-function CadastrarAtividade() {
+function CadastrarAtividadeSupervisor() {
   const fields = [
     { name: 'solicitacao_id', label: 'Solicitação Administrativa', type: 'select'},
     { name: 'descricao', label: 'Descrição' },
@@ -16,9 +16,9 @@ function CadastrarAtividade() {
       submitUrl="/atividades_limpeza"
       successMessage="Atividade cadastrada com sucesso!"
       errorMessage="Erro ao cadastrar atividade"
-      cancelUrl="/admin/dashboard"
+      cancelUrl="/supervisor/dashboard"
     />
   );
 }
 
-export default CadastrarAtividade;
+export default CadastrarAtividadeSupervisor;
