@@ -24,6 +24,10 @@ import SolicitacoesSupervisor from './view/supervisor/layout/solicitacoes/Solici
 import EditarAtividadeSupervisor from './view/supervisor/layout/atividades/components/EditarAtividade';
 import CadastrarAtividadeSupervisor from './view/supervisor/layout/atividades/components/CadastrarAtividade';
 
+// funcionário
+import AtividadesFuncionario from './view/user/layout/atividades/AtividadesFuncionario'; 
+import ProfileFuncionario from './view/user/profile/ProfileFuncionario';
+
 
 export const routesAdmin = [
     {
@@ -151,3 +155,25 @@ export const routesSupervisor = [
         element: <SolicitacoesSupervisor />,
     }
 ]
+
+
+export const routesFuncionarios = [
+    {
+        name: 'Dashboard',
+        path: 'dashboard',
+        icon: MdDashboard,
+        element: <Dashboard />,  // Crie o componente de dashboard do funcionário
+    },
+    {
+        name: 'Atividades',
+        path: 'atividades',
+        icon: MdAssignment,
+        element: <AtividadesFuncionario />,  // Crie o componente de atividades do funcionário
+    },
+    {
+        name: 'Perfil',
+        path: '/funcionario/perfil',
+        icon: MdSettings,
+        element: <ProfileFuncionario />,
+    },
+];

@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import { Box, TextField, Button, CircularProgress } from '@mui/material';
+import { Box, TextField, Button, CircularProgress, Snackbar } from '@mui/material';
 import api from '../../services/api';
 import useCustomNavigate from '../../hooks/useCustomNagivate.js';
 import { useAuth } from '../../context/AuthContext';
 import { jwtDecode } from 'jwt-decode';
-import { GoTypography } from 'react-icons/go';
 
 function SignIn() {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState({ email: '', password: '', general: '' });
   const [isLoading, setIsLoading] = useState(false);
-  const { user, setTokenAndUser } = useAuth();
+  const [openSnackbar, setOpenSnackbar] = useState(false);  // Estado para controlar o Snackbar
+  const { setTokenAndUser } = useAuth();
   const { goTo } = useCustomNavigate();
 
   const handleChange = (e) => {
@@ -45,26 +45,23 @@ function SignIn() {
           senha: formData.password,
         });
 
-        alert('Login realizado com sucesso!');
         setTokenAndUser(response.data.token);
-        const decoded = jwtDecode(response.data.token)
+        const decoded = jwtDecode(response.data.token);
 
         if (decoded.sub.tipo_id === 1) {
           goTo('/admin');
         } else if (decoded.sub.tipo_id === 2) {
           goTo('/supervisor');
         } else if (decoded.sub.tipo_id === 3) {
-          goTo('/unauthorized');
+          goTo('/funcionario');
         }
-           
+
+        setOpenSnackbar(true);
 
       } catch (error) {
-        console.error('Erro ao fazer login:', error.response?.data || error.message);
-
-        setErrors((prevErrors) => ({
-          ...prevErrors,
+        setErrors({
           general: error.response?.data?.message || 'Erro ao fazer login. Verifique suas credenciais.',
-        }));
+        });
       } finally {
         setIsLoading(false);
       }
@@ -90,20 +87,18 @@ function SignIn() {
     >
       {errors.general && (
         <div style={{ color: 'red', textAlign: 'center', marginBottom: '10px' }}>
-          {typeof errors.general === 'string' ? errors.general : 'Erro desconhecido'}
+          {errors.general}
         </div>
       )}
 
       <h2>Login</h2>
 
-      {/* Campo de Email */}
       <TextField
         fullWidth
         id="email"
         label="Email"
         type="email"
         variant="outlined"
-        aria-label="Digite seu email"
         value={formData.email}
         onChange={handleChange}
         error={!!errors.email}
@@ -111,18 +106,16 @@ function SignIn() {
         required
       />
 
-      {/* Campo de Senha */}
       <TextField
         fullWidth
         id="password"
         label="Senha"
         type="password"
         variant="outlined"
-        aria-label="Digite sua senha"
         value={formData.password}
         onChange={handleChange}
         error={!!errors.password}
-        helperText={typeof errors.password === 'string' ? errors.password : ''}
+        helperText={errors.password}
         sx={{ mt: 2 }}
         required
       />
@@ -136,6 +129,7 @@ function SignIn() {
       >
         {isLoading ? <CircularProgress size={24} /> : 'Entrar'}
       </Button>
+
       <Button
         fullWidth
         variant="outlined"
@@ -146,6 +140,14 @@ function SignIn() {
       >
         Voltar
       </Button>
+
+      {/* Snackbar para feedback de sucesso */}
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={6000}
+        onClose={() => setOpenSnackbar(false)}
+        message="Login realizado com sucesso!"
+      />
     </Box>
   );
 }

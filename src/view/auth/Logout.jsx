@@ -8,7 +8,9 @@ const LogoutPage = () => {
 
   useEffect(() => {
     logout();
-    goTo('/login');
+    setTimeout(() => {
+      goTo('/login');
+    }, 500);  // Delay de 0.5 segundo antes de redirecionar
   }, [goTo, logout]);
 
   return <div>Desconectando...</div>;

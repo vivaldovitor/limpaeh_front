@@ -9,11 +9,10 @@ const FuncionarioSidebar = () => {
   const token = localStorage.getItem('token');
 
   const menuItems = [
-    { text: 'Dashboard', icon: <DashboardIcon />, path: '/dashboard' },
-    { text: 'Atividades', icon: <AssignmentIcon />, path: '/atividades' },
-    { text: 'Perfil', icon: <PersonIcon />, path: '/atividades' },
+    { text: 'Dashboard', icon: <DashboardIcon />, path: '/funcionario/dashboard' },
+    { text: 'Minhas Atividades', icon: <AssignmentIcon />, path: '/funcionario/atividades' },
+    { text: 'Perfil', icon: <PersonIcon />, path: '/funcionario/perfil' },
     token && { text: 'Logout', icon: <LogoutIcon />, path: '/logout' },
-
   ].filter(Boolean);
 
   return <Sidebar menuItems={menuItems} />;

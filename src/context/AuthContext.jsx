@@ -43,6 +43,12 @@ export const AuthProvider = ({ children }) => {
     const decoded = jwtDecode(token);
     const { id, email, tipo_id: tipoId } = decoded.sub;
 
+    const roles = {
+      1: 'admin',
+      2: 'supervisor',
+      3: 'funcionário'
+    };
+
     setUser({
       id,
       email,

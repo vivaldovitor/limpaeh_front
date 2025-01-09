@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import UserProfile from '../components/profile/Profile'; 
 import { useAuth } from '../context/AuthContext';
 import api from '../services/api';
+import { CircularProgress } from '@mui/material';  // Adicionando CircularProgress
 
 function ProfilePage() {
   const { user } = useAuth();
@@ -38,7 +39,7 @@ function ProfilePage() {
   }
 
   if (loadingDetails) {
-    return <p>Carregando detalhes do perfil...</p>;
+    return <CircularProgress />;
   }
 
   const getFuncao = () => {
