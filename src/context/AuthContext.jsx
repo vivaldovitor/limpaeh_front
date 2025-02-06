@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { jwtDecode } from 'jwt-decode'; // Corrigido para remover chaves
+import { jwtDecode } from 'jwt-decode';
 
 export const AuthContext = createContext();
 
@@ -12,11 +12,6 @@ export const AuthProvider = ({ children }) => {
     if (token) {
       try {
         const decoded = jwtDecode(token);
-        
-        if (decoded.exp * 1000 < Date.now()) {
-          logout();
-          return;
-        }
 
         const { id, email, tipo_id: tipoId } = decoded.sub;
 

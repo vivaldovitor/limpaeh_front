@@ -1,10 +1,10 @@
 import React from 'react';
 import { CardContent } from '@mui/material';
-import { CardTitle, CardDescription, CardButton, StyledCard } from '/src/styles/CardStyles.js';
-import useCustomNavigate from "/src/hooks/useCustomNagivate.js";
+import { Link } from 'react-router-dom';
+import { CardTitle, CardDescription, StyledCard } from '/src/styles/CardStyles.js';
+import  { StyledButton } from '/src/styles/Toolbar.js';
 
 function FeaturesCard() {
-  const { goTo } = useCustomNavigate();
 
   return (
     <StyledCard>
@@ -17,13 +17,14 @@ function FeaturesCard() {
           - Relatórios detalhados<br />
           - Monitoramento em tempo real
         </CardDescription>
-        <CardButton
+        <Link to="/login">
+        <StyledButton
           variant="contained"
           color="secondary" 
-          style={{ marginTop: '10px' }}
-          onClick={() => goTo('/login')}>
+          style={{ marginTop: '10px' }}>
           Começar Agora
-        </CardButton>
+        </StyledButton>
+        </Link>
       </CardContent>
     </StyledCard>
   );

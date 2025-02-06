@@ -2,16 +2,33 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Box, Button, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { StyledButton } from '@/styles/Toolbar';
+import api from '@/services/api';
 
-function TableComponent({ dados, handleExcluir, tipo, cadastrarUrl, editarUrl, isAdmin }) {
+function TableComponent({ dados, setDados, handleExcluir, tipo, cadastrarUrl, editarUrl, isAdmin }) {
   const colunas = Object.keys(dados[0] || {}).map((key) => key.charAt(0).toUpperCase() + key.slice(1));
-
-  const confirmarExclusao = (id) => {
-    if (window.confirm('Tem certeza que deseja excluir este item?')) {
-      handleExcluir(id);
-    }
-  };
+  
+  console.log(handleExcluir);
+  
+  const confirmarExclusao = async (id) => {
+    console.log(id);
     
+      if (window.confirm('Tem certeza que deseja excluir este item?')) {
+        try {
+          await api.delete(`${handleExcluir}/${id}`);
+          setDados(dados.filter((item) => item.id !== id));
+          alert(`${handleExcluir} excluído com sucesso!`);
+        } catch (error) {
+          console.error(`Erro ao excluir ${tipo.toLowerCase()}:`, error);
+          alert(`Não foi possível excluir o ${tipo.toLowerCase()}.`);
+        }
+      }
+    };
+   
+
+  console.log(dados);
+  
+
   const renderCellValue = (valor) => {
     if (typeof valor === 'object' && valor !== null) {
       return valor.descricao || valor.nome || JSON.stringify(valor);
@@ -23,12 +40,12 @@ function TableComponent({ dados, handleExcluir, tipo, cadastrarUrl, editarUrl, i
     <Box sx={{ padding: '20px' }}>
       <h2>{tipo}</h2>
       {isAdmin && cadastrarUrl && (
-        <Button variant="contained" color="primary" sx={{ marginBottom: '10px' }} component={Link} to={cadastrarUrl}>
+        <StyledButton variant="contained" color="primary" sx={{ marginBottom: '10px' }} component={Link} to={cadastrarUrl}>
           Cadastrar {tipo}
-        </Button>
+        </StyledButton>
       )}
       {dados.length === 0 ? (
-        <p>Nenhum {tipo} encontrado.</p>
+        <p>Vazio</p>
       ) : (
         <Table>
           <TableHead>

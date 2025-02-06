@@ -1,10 +1,9 @@
 import React from 'react';
-import { AppBar, Toolbar, Button, Box } from '@mui/material';
-import useCustomNavigate from '../../../hooks/useCustomNagivate.js';
+import { AppBar, Toolbar, Box } from '@mui/material';
+import { Link } from 'react-router-dom'
 import { Title, StyledButton } from '/src/styles/Toolbar.js'
 
 function Header() {
-  const { goTo } = useCustomNavigate(); 
 
   return (
     <AppBar position="static">
@@ -13,9 +12,11 @@ function Header() {
           LimpAeh
         </Title>
         <Box>
-          <StyledButton onClick={() => goTo('/login')}>
+          <Link to="/login">
+          <StyledButton>
             Login
           </StyledButton>
+          </Link>
         </Box>
       </Toolbar>
     </AppBar>

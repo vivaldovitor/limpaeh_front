@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import api from '../../../../services/api';
-import AtividadesTableSupervisor from './components/Atividades';
-import ExcluirItem from '../excluir';
-import Header from '../../../../components/header/Header';
+import { useNavigate } from 'react-router-dom';
+import api from '@/services/api';
+import ActivityCards from '@/components/card/ActivityCard';
+import Header from '@/components/header/Header';
 
 function AtividadesSupervisor() {
   const [atividades, setAtividades] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchAtividades = async () => {
@@ -24,16 +25,31 @@ function AtividadesSupervisor() {
     fetchAtividades();
   }, []);
 
-  const handleExcluirAtividade = (id) => {
-    ExcluirItem(id, '/atividade_limpeza', setAtividades, atividades);
+  const handleExcluirAtividade = async (id) => {
+    if (window.confirm('Tem certeza que deseja excluir esta atividade?')) {
+      try {
+        await api.delete(`/atividade_limpeza/${id}`);
+        setAtividades(atividades.filter((atividade) => atividade.id !== id));
+        alert('Atividade excluída com sucesso!');
+      } catch (error) {
+        console.error('Erro ao excluir atividade:', error);
+        alert('Não foi possível excluir a atividade.');
+      }
+    }
+  };
+
+  const handleEditarAtividade = (id) => {
+    navigate(`/supervisor/atividades/editar/${id}`);
   };
 
   return (
     <>
-      <Header titulo="Limpaeh - Atividades"/>
-      <AtividadesTableSupervisor 
-        atividades={atividades} 
-        handleExcluirAtividade={handleExcluirAtividade}
+      <Header titulo="Limpaeh - Atividades" />
+      <ActivityCards
+        dados={atividades}
+        handleExcluir={handleExcluirAtividade}
+        handleEditar={handleEditarAtividade}
+        isAdmin={true}
       />
     </>
   );

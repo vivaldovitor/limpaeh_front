@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import api from '../../../../services/api';
-import SolicitacoesTable from '../../../supervisor/layout/solicitacoes/components/Solicitacoes';
-import ExcluirItem from '../excluir';
-import Header from '../../../../components/header/Header';
+import api from '@/services/api';
+import RequestList from '@/components/timeline/RequestList';
+import Header from '@/components/header/Header';
 
 function SolicitacoesSupervisor() {
   const [solicitacoes, setSolicitacoes] = useState([]);
@@ -31,9 +30,9 @@ function SolicitacoesSupervisor() {
   return (
     <>
     <Header titulo="Limpaeh - Solicitações"/>
-    <SolicitacoesTable 
-      solicitacoes={solicitacoes} 
-      handleExcluirSolicitacao={handleExcluirSolicitacao}
+    <RequestList
+      dados={solicitacoes}
+      isAdmin={false}
     />
     </>
   );

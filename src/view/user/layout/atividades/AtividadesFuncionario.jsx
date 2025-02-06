@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import api from '../../../../services/api';
-import AtividadesTableFuncionario from './components/Atividades';
-import Header from '../../../../components/header/Header';
-import { useAuth } from '../../../../context/AuthContext';
+import api from '@/services/api';
+import ActivityCards from '@/components/card/ActivityCard';
+import Header from '@/components/header/Header';
+import { useAuth } from '@/context/AuthContext';
 
 function AtividadesFuncionario() {
   const [atividades, setAtividades] = useState([]);
@@ -13,10 +13,10 @@ function AtividadesFuncionario() {
       try {
         const response = await api.get('/atividades_limpeza');
         if (Array.isArray(response.data.atividades)) {
-            
           // Filtra as atividades para mostrar apenas as atribuídas ao funcionário logado
-          const atividadesFiltradas = response.data.atividades.filter(atividade => atividade.funcionario_id === user.id);
-
+          const atividadesFiltradas = response.data.atividades.filter(
+            (atividade) => atividade.funcionario_id === user.id
+          );
           setAtividades(atividadesFiltradas);
         } else {
           console.error('A resposta da API não contém um array de atividades');
@@ -37,10 +37,14 @@ function AtividadesFuncionario() {
 
   return (
     <>
-      <Header titulo="Limpaeh - Minhas Atividades"/>
-      <AtividadesTableFuncionario 
-        atividades={atividades} 
-        handleExcluirAtividade={handleExcluirAtividade}
+      <Header titulo="Limpaeh - Minhas Atividades" />
+      <ActivityCards
+        dados={atividades}
+        handleExcluir={handleExcluirAtividade}
+        tipo="Atividades"
+        cadastrarUrl="/funcionario/atividades/cadastrar"
+        editarUrl="/funcionario/atividades/editar"
+        isAdmin={false}
       />
     </>
   );

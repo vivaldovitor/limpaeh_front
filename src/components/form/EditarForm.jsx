@@ -1,18 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button, TextField, FormControl, FormLabel, Select, MenuItem } from '@mui/material';
 import api from '../../services/api';
-import useCustomNavigate from '../../hooks/useCustomNagivate.js';
+import useCustomNavigate from '../../hooks/useCustomNavigate.js';
 import useLoadOptions from '../../hooks/useLoadOptions.js';
 
 function EditarForm({ fields, submitUrl, successMessage, errorMessage, id, cancelUrl }) {
   const initialState = fields.reduce((acc, field) => ({ ...acc, [field.name]: '' }), {});
   const [formData, setFormData] = useState(initialState);
   const [error, setError] = useState('');
-  const { tipos, empresas, funcionarios, supervisores, setor_admin, ambientes, loadingOptions, error: loadError } = useLoadOptions();
-  const { goTo } = useCustomNavigate();  
-
-  console.log(cancelUrl);
-  
+  const { tipos, empresas, funcionarios, supervisores, admin, ambientes, loadingOptions, solicitacoes, error: loadError } = useLoadOptions();
+  const { goTo } = useCustomNavigate();    
 
   useEffect(() => {
     const loadData = async () => {
@@ -39,12 +36,11 @@ function EditarForm({ fields, submitUrl, successMessage, errorMessage, id, cance
   };
 
   const handleSubmit = async () => {
-    if (Object.values(formData).some(value => value === '')) {
-      setError('Todos os campos são obrigatórios!');
-      return;
-    }
+    console.log("URL da requisição:", `${submitUrl}/${id}`);
+    console.log("Dados enviados:", formData);
+    
     try {
-      await api.put(`${submitUrl}/${id}`, formData);
+      await api.put(`${submitUrl}/${id}`, formData);      
       alert(successMessage);
       goTo(cancelUrl);
     } catch (err) {
@@ -61,11 +57,12 @@ function EditarForm({ fields, submitUrl, successMessage, errorMessage, id, cance
   const renderField = (field) => {
     const optionsMap = {
       supervisor_id: supervisores,
-      setor_admin_id: setor_admin,
+      admin_id: admin,
       funcionario_id: funcionarios.filter(f => f.tipo.descricao === 'funcionário'),
       tipo_id: tipos,
       empresa_id: empresas,
-      ambiente_id: ambientes
+      ambiente_id: ambientes,
+      solicitacao_id: solicitacoes,
     };
 
     const options = optionsMap[field.name] || [];

@@ -1,29 +1,24 @@
 import React, { useState } from 'react';
 import { Box, Button, TextField, FormControl, FormLabel, Select, MenuItem } from '@mui/material';
 import useLoadOptions from '../../hooks/useLoadOptions.js';
-import useCustomNavigate from '../../hooks/useCustomNagivate.js';
+import useCustomNavigate from '../../hooks/useCustomNavigate.js';
 import api from '../../services/api';
 
 function CadastroForm({ fields, submitUrl, successMessage, errorMessage, cancelUrl }) {
+  
   const initialState = fields.reduce((acc, field) => ({ ...acc, [field.name]: '' }), {});
   const [formData, setFormData] = useState(initialState);
   const [error, setError] = useState('');
-  const { tipos, empresas, funcionarios, supervisores, setor_admin, ambientes, solicitacoes, loadingOptions, error: loadError } = useLoadOptions();
-  const { goTo } = useCustomNavigate();
-
-  console.log(cancelUrl);
+  const { tipos, empresas, funcionarios, supervisores, admin, ambientes, solicitacoes, loadingOptions, error: loadError } = useLoadOptions();
+  const { goTo } = useCustomNavigate();  
   
-
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
   const handleSubmit = async () => {
-    if (Object.values(formData).some(value => value === '')) {
-      setError('Todos os campos são obrigatórios!');
-      return;
-    }
     try {
       await api.post(submitUrl, formData);
       alert(successMessage);
@@ -41,7 +36,7 @@ function CadastroForm({ fields, submitUrl, successMessage, errorMessage, cancelU
   const renderField = (field) => {
     const optionsMap = {
       supervisor_id: supervisores,
-      setor_admin_id: setor_admin,
+      admin_id: admin,
       funcionario_id: funcionarios.filter(f => f.tipo.descricao === 'funcionário'),
       tipo_id: tipos,
       empresa_id: empresas,

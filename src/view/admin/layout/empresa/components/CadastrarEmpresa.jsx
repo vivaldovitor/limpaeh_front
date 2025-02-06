@@ -13,9 +13,10 @@ function CadastrarEmpresa() {
   return (
     <CadastroForm
       fields={fields}
-      submitUrl="/empresa"
+      submitUrl="/empresas"
       successMessage="Empresa cadastrada com sucesso!"
       errorMessage="Erro ao cadastrar empresa"
+      cancelUrl="/admin/empresas"
     />
   );
 }

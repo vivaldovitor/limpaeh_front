@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import EditarForm from '../../../../../components/form/EditarForm';
+import EditarForm from '@/components/form/EditarForm';
 
 function EditarEmpresa({ onUpdate }) {
   const { empresaId } = useParams();
@@ -16,11 +16,12 @@ function EditarEmpresa({ onUpdate }) {
   return (
     <EditarForm
       fields={fields}
-      submitUrl="empresa"
+      submitUrl="/empresa"
       successMessage="Empresa atualizada com sucesso!"
       errorMessage="Erro ao atualizar a empresa."
       id={empresaId}
       onSubmit={onUpdate}
+      cancelUrl="/admin/empresas"
     />
   );
 }

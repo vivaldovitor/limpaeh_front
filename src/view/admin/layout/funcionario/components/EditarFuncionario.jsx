@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import EditarForm from '../../../../../components/form/EditarForm';
+import EditarForm from '@/components/form/EditarForm';
 
 function EditarFuncionario({ onUpdate }) {
   const { funcionarioId } = useParams();
@@ -29,11 +29,12 @@ function EditarFuncionario({ onUpdate }) {
   return (
     <EditarForm
       fields={fields}
-      submitUrl="funcionario"
+      submitUrl="/funcionario"
       successMessage="Funcionário atualizado com sucesso!"
       errorMessage="Erro ao atualizar o funcionário."
       id={funcionarioId}
       onSubmit={onUpdate}
+      cancelUrl="/admin/funcionarios"
     />
   );
 }

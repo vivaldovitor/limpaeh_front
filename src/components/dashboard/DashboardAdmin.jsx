@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Box, Grid2, CircularProgress } from '@mui/material';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import AtividadesRecentes from './components/cards/AtividadesRecentes';
-import NumeroFuncionarios from './components/cards/NumeroFuncionarios';
-import api from '../../../services/api';
-import DashboardHeader from '../../../components/dashboard/header/DashboardHeader';
+import api from '../../services/api';
+
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 

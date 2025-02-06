@@ -2,11 +2,11 @@ import React from 'react';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PeopleIcon from '@mui/icons-material/People';
 import BusinessIcon from '@mui/icons-material/Business';
-import AssignmentIcon from '@mui/icons-material/Assignment';
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import LogoutIcon from '@mui/icons-material/Logout';
 import PersonIcon from '@mui/icons-material/Person';
 import Sidebar from '../../../components/sidebar/Sidebar';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 const AdminSidebar = () => {
   const token = localStorage.getItem('token');
@@ -22,10 +22,10 @@ const AdminSidebar = () => {
       text: 'Empresas', icon: <BusinessIcon />, path: '/admin/empresas' 
     },
     { 
-      text: 'Atividades', icon: <AssignmentIcon />, path: '/admin/atividades' 
+      text: 'Solicitar atividade', icon: <PostAddIcon />, path: '/admin/solicitacoes' 
     },
-    { 
-      text: 'Solicitações de Atividades', icon: <PostAddIcon />, path: '/admin/solicitacoes' 
+    {
+      text: 'Ambientes', icon: <LocationOnIcon />, path: '/admin/ambientes' 
     },
     { 
       text: 'Perfil', icon: <PersonIcon/>, path: '/admin/perfil' 

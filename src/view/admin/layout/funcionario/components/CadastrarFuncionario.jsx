@@ -16,6 +16,7 @@ function CadastrarFuncionario() {
       submitUrl="/funcionarios"
       successMessage="Funcionário cadastrado com sucesso!"
       errorMessage="Erro ao cadastrar funcionário"
+      cancelUrl="/admin/funcionarios"
     />
   );
 }

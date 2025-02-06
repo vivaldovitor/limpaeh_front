@@ -1,6 +1,6 @@
 import { useEffect } from 'react'; // Remova a importação de React desnecessária
 import { useAuth } from '../../context/AuthContext';
-import useCustomNavigate from '../../hooks/useCustomNagivate.js';
+import useCustomNavigate from '../../hooks/useCustomNavigate.js';
 
 const LogoutPage = () => {
   const { logout } = useAuth();

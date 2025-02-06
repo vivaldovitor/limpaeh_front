@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Box, TextField, Button, CircularProgress, Snackbar } from '@mui/material';
-import api from '../../services/api';
-import useCustomNavigate from '../../hooks/useCustomNagivate.js';
+import { Link } from 'react-router-dom';
+import api from '@/services/api';
+import useCustomNavigate from '../../hooks/useCustomNavigate.js';
 import { useAuth } from '../../context/AuthContext';
 import { jwtDecode } from 'jwt-decode';
 
@@ -9,7 +10,7 @@ function SignIn() {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState({ email: '', password: '', general: '' });
   const [isLoading, setIsLoading] = useState(false);
-  const [openSnackbar, setOpenSnackbar] = useState(false);  // Estado para controlar o Snackbar
+  const [openSnackbar, setOpenSnackbar] = useState(false);
   const { setTokenAndUser } = useAuth();
   const { goTo } = useCustomNavigate();
 
@@ -130,6 +131,7 @@ function SignIn() {
         {isLoading ? <CircularProgress size={24} /> : 'Entrar'}
       </Button>
 
+      <Link to="/">
       <Button
         fullWidth
         variant="outlined"
@@ -139,9 +141,9 @@ function SignIn() {
         onClick={() => goTo('/')}
       >
         Voltar
-      </Button>
+      </Button> 
+      </Link>
 
-      {/* Snackbar para feedback de sucesso */}
       <Snackbar
         open={openSnackbar}
         autoHideDuration={6000}
