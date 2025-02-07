@@ -90,7 +90,7 @@ function ActivityCards({ dados, handleExcluir, handleEditar, isAdmin }) {
                   color="primary"
                   onClick={() => goTo(`/funcionario/atividades/relatorios/cadastrar/${atividade.id}`)}
                 >
-                  Iniciar
+                  Ir para relatório
                 </Button>
                 
                 )}

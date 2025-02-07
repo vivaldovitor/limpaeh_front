@@ -1,6 +1,5 @@
 import React from 'react';
-import Dashboard from './components/dashboard/DashboardAdmin';
-
+import DashboardPage from './pages/DashboardPage';
 // admin
 import {
     FuncionariosAdmin,
@@ -43,7 +42,7 @@ export const routesAdmin = [
     {
         name: 'Dashboard',
         path: 'dashboard',
-        element: <Dashboard />,
+        element: <DashboardPage />,
     },
     {
         name: 'Funcionários',
@@ -117,7 +116,7 @@ export const routesSupervisor = [
     {
         name: 'Supervisor Dashboard',
         path: 'dashboard',
-        element: <Dashboard />,
+        element: <DashboardPage />,
     },
     {
         name: 'Atividades',
@@ -151,7 +150,7 @@ export const routesFuncionarios = [
     {
         name: 'Dashboard',
         path: 'dashboard',
-        element: <Dashboard />,
+        element: <DashboardPage />,
     },
     {
         name: 'Atividades',

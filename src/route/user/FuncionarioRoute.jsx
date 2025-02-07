@@ -9,7 +9,7 @@ const FuncionarioRoute = ({ element }) => {
     return <div>Carregando...</div>;
   }
 
-  if (!user || user.tipoId !== 3) {
+  if (!user || user.tipoId !== 3) {    
     return <Navigate to="/login" replace={true} />;
   }
 

@@ -85,10 +85,13 @@ const RequestList = ({ dados, handleExcluir, handleEditar, isAdmin }) => {
                 <Button
                   variant="contained"
                   sx={{
-                    backgroundColor: "#FF9800", // Laranja
+                    backgroundColor: solicitacao.status === 'visualizado' ? "#4CAF50" : "#FF9800", // Laranja
                     color: "#fff",
                     fontSize: "0.75rem",
                     padding: "4px 12px",
+                    "&:hover": {
+                      backgroundColor: solicitacao.status === 'visualizado' ? "#388E3C" : "#F57C00", // Tom mais escuro no hover
+                    },
                   }}
                   onClick={() => handleChangeStatus(solicitacao.id, solicitacao.status)}
                   disabled={designacaoStatus[solicitacao.id]}

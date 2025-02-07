@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Container,
   Typography,
@@ -6,6 +6,7 @@ import {
   Button,
   Snackbar,
   Alert,
+  Box,
 } from "@mui/material";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -21,19 +22,34 @@ function ReportsPage({ fields, submitUrl }) {
   const { atividadeId } = useParams();
   const { user } = useAuth();
   const { enviarRelatorio, atualizarStatusAtividade } = useLoadOptions();
-  
+
   const funcionario_id = user?.id;
 
-  const [formValues, setFormValues] = useState(
-    fields.reduce((acc, field) => {
-      acc[field.name] = "";
-      return acc;
-    }, {})
-  );
-  const [status, setStatus] = useState("PENDENTE");
+  // Recuperar horário do localStorage ao carregar a página
+  const storedHorarioInicio = localStorage.getItem(`horario_inicio_${atividadeId}`);
+  const storedStatus = localStorage.getItem(`status_atividade_${atividadeId}`);
+
+  const [formValues, setFormValues] = useState({
+    horario_inicio: storedHorarioInicio ? dayjs(storedHorarioInicio) : "",
+    horario_fim: "",
+  });
+
+  const [status, setStatus] = useState(storedStatus || "PENDENTE");
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+
+  useEffect(() => {
+    if (storedHorarioInicio) {
+      setFormValues((prevValues) => ({
+        ...prevValues,
+        horario_inicio: dayjs(storedHorarioInicio),
+      }));
+    }
+    if (storedStatus) {
+      setStatus(storedStatus);
+    }
+  }, [storedHorarioInicio, storedStatus]);
 
   const handleStart = async () => {
     if (window.confirm("Iniciar atividade?")) {
@@ -43,6 +59,9 @@ function ReportsPage({ fields, submitUrl }) {
         ...prevValues,
         horario_inicio: startTime,
       }));
+
+      localStorage.setItem(`horario_inicio_${atividadeId}`, startTime.toISOString());
+      localStorage.setItem(`status_atividade_${atividadeId}`, "EM_ANDAMENTO");
 
       try {
         await atualizarStatusAtividade(atividadeId, "EM_ANDAMENTO");
@@ -59,20 +78,8 @@ function ReportsPage({ fields, submitUrl }) {
     }
   };
 
-  const handleCancel = () => {
-    if (window.confirm("Tem certeza que deseja voltar? (O relatório será reiniciado!)")) {
-      goTo("/funcionario/atividades");
-    }
-  };
-
   const handleSubmit = async () => {
     if (window.confirm("Tem certeza que deseja finalizar?")) {
-      if (!formValues.horario_inicio) {
-        setSnackbarMessage("Você precisa iniciar a atividade antes de finalizar!");
-        setSnackbarSeverity("error");
-        setSnackbarOpen(true);
-        return;
-      }
 
       const endTime = dayjs();
 
@@ -97,6 +104,10 @@ function ReportsPage({ fields, submitUrl }) {
           horario_fim: endTime,
         }));
         setStatus("FINALIZADO");
+
+        // Remover dados do localStorage após finalizar
+        localStorage.removeItem(`horario_inicio_${atividadeId}`);
+        localStorage.removeItem(`status_atividade_${atividadeId}`);
       } catch (error) {
         setSnackbarMessage("Erro ao enviar relatório.");
         setSnackbarSeverity("error");
@@ -109,19 +120,29 @@ function ReportsPage({ fields, submitUrl }) {
     setSnackbarOpen(false);
   };
 
-  const handleChange = (e) => {
-    setFormValues({
-      ...formValues,
-      [e.target.name]: e.target.value,
-    });
-  };
-
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Container>
         <Typography variant="h4" gutterBottom>
           Relatório
         </Typography>
+
+        <DateTimePicker
+          label="Horário de Início"
+          value={formValues.horario_inicio || null}
+          disabled
+          renderInput={(params) => <TextField fullWidth margin="normal" {...params} />}
+        />
+
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleStart}
+          style={{marginLeft: 10}}
+          disabled={Boolean(formValues.horario_inicio)}
+        >
+          Iniciar
+        </Button>
 
         {fields.map((field) => (
           <TextField
@@ -131,46 +152,33 @@ function ReportsPage({ fields, submitUrl }) {
             margin="normal"
             name={field.name}
             value={formValues[field.name]}
-            onChange={handleChange}
+            onChange={(e) =>
+              setFormValues({ ...formValues, [e.target.name]: e.target.value })
+            }
             disabled={status !== "EM_ANDAMENTO"}
           />
         ))}
 
-        <DateTimePicker
-          label="Horário de Início"
-          value={formValues.horario_inicio || null}
-          disabled
-          renderInput={(params) => <TextField fullWidth margin="normal" {...params} />}
-        />
+        {status === "EM_ANDAMENTO" && (
+          <>
+            <DateTimePicker
+              label="Horário de Fim"
+              value={formValues.horario_fim || null}
+              disabled
+              renderInput={(params) => <TextField fullWidth margin="normal" {...params} />}
+            />
 
-        <DateTimePicker
-          label="Horário de Fim"
-          value={formValues.horario_fim || null}
-          disabled
-          renderInput={(params) => <TextField fullWidth margin="normal" {...params} />}
-        />
-
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleStart}
-          style={{ marginRight: 10 }}
-          disabled={Boolean(formValues.horario_inicio)}
-        >
-          Iniciar
-        </Button>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleSubmit}
-          disabled={!formValues.horario_inicio || Boolean(formValues.horario_fim)}
-          style={{ marginRight: 10 }}
-        >
-          Finalizar
-        </Button>
-        <Button variant="contained" color="secondary" onClick={handleCancel}>
-          Voltar
-        </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleSubmit}
+              style={{marginLeft: 10}}
+              disabled={!formValues.horario_inicio}
+            >
+              Finalizar
+            </Button>
+          </>
+        )}
 
         <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleCloseSnackbar}>
           <Alert onClose={handleCloseSnackbar} severity={snackbarSeverity}>
@@ -178,6 +186,12 @@ function ReportsPage({ fields, submitUrl }) {
           </Alert>
         </Snackbar>
       </Container>
+
+      <br />
+
+      <Button variant="contained" color="secondary" onClick={() => goTo("/funcionario/atividades")}>
+        Voltar
+      </Button>
     </LocalizationProvider>
   );
 }

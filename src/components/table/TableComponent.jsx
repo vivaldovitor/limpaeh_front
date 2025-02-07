@@ -7,11 +7,8 @@ import api from '@/services/api';
 
 function TableComponent({ dados, setDados, handleExcluir, tipo, cadastrarUrl, editarUrl, isAdmin }) {
   const colunas = Object.keys(dados[0] || {}).map((key) => key.charAt(0).toUpperCase() + key.slice(1));
-  
-  console.log(handleExcluir);
-  
+    
   const confirmarExclusao = async (id) => {
-    console.log(id);
     
       if (window.confirm('Tem certeza que deseja excluir este item?')) {
         try {
@@ -24,10 +21,7 @@ function TableComponent({ dados, setDados, handleExcluir, tipo, cadastrarUrl, ed
         }
       }
     };
-   
-
-  console.log(dados);
-  
+     
 
   const renderCellValue = (valor) => {
     if (typeof valor === 'object' && valor !== null) {

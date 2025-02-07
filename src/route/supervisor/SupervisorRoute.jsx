@@ -9,7 +9,7 @@ const SupervisorRoute = ({ element }) => {
     return <div>Carregando...</div>;
   }
 
-  if (!user || (!user.isSupervisor)) {
+  if (!user || (!user.isSupervisor)) {    
     return <Navigate to="/login" replace={true} />;
   }
 

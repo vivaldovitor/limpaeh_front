@@ -9,7 +9,7 @@ const PrivateRoute = ({ element }) => {
     return <div>Carregando...</div>;
   }
 
-  if (!user || !user.isAdmin) {
+  if (!user || !user.isAdmin) {    
     return <Navigate to="/login" replace={true} />;
   }
 
