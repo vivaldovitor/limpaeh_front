@@ -26,7 +26,7 @@ function useLoadOptions() {
           relatoriosResponse,
           atividadesResponse,
         ] = await Promise.all([
-          api.get("/tipos_funcionarios"),
+          api.get("/tipos_usuarios"),
           api.get("/empresas"),
           api.get("/funcionarios"),
           api.get("/ambientes"),
@@ -34,8 +34,7 @@ function useLoadOptions() {
           api.get("/relatorios"),
           api.get("/atividades_limpeza")
         ]);
-
-        setTipos(tiposResponse.data.tipos_funcionarios || []);
+        setTipos(tiposResponse.data.tipos_usuarios || []);
         setEmpresas(empresasResponse.data.empresas || []);
         setFuncionarios(funcionariosResponse.data.funcionarios || []);
         setSupervisores(
@@ -51,7 +50,7 @@ function useLoadOptions() {
         );
         setSolicitacoes(solicitacoesResponse.data.solicitacoes || []);
         setRelatorios(relatoriosResponse.data.relatorios || []);
-        setAtividades(atividadesResponse.data.atividades_limpeza || []);
+        setAtividades(atividadesResponse.data.atividades || []);
       } catch (err) {
         setError("Erro ao carregar as opções");
       } finally {
@@ -61,20 +60,7 @@ function useLoadOptions() {
 
     loadOptions();
   }, []);
-
-  const finalizarAtividade = async (relatorioId) => {
-    try {
-      const response = await api.post(`/finalizar_atividade/${relatorioId}`);
-      if (response.status === 200) {
-        setRelatorios((prevRelatorios) =>
-          prevRelatorios.filter((r) => r.id !== relatorioId)
-        ); 
-      }
-    } catch (error) {
-      console.error("Erro ao finalizar atividade:", error);
-    }
-  };
-
+  
   const enviarRelatorio = async (novoRelatorio) => {
     try {
       const response = await api.post("/relatorios", novoRelatorio);
@@ -122,7 +108,7 @@ function useLoadOptions() {
     } catch (error) {
       console.error("Erro ao atualizar status da solicitação:", error);
     }
-  };
+  };  
 
   return {
     tipos,
@@ -136,7 +122,6 @@ function useLoadOptions() {
     atividades,
     loadingOptions,
     error,
-    finalizarAtividade,
     enviarRelatorio,
     atualizarStatusAtividade,
     atualizarStatusSolicitacao,

@@ -17,10 +17,12 @@ function CadastroForm({ fields, submitUrl, successMessage, errorMessage, cancelU
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
+  
+  console.log(submitUrl, formData);
 
   const handleSubmit = async () => {
     try {
-      await api.post(submitUrl, formData);
+      await api.post(submitUrl, formData);      
       alert(successMessage);
       setFormData(initialState);
       goTo(cancelUrl);

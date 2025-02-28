@@ -1,5 +1,5 @@
 import React from 'react';
-import CadastroForm from '../../../../../components/form/CadastroForm';
+import CadastroForm from '@/components/form/CadastroForm';
 
 function CadastrarFuncionario() {
   const fields = [

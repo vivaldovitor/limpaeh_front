@@ -1,31 +1,51 @@
 import React, { useEffect, useState } from "react";
-import { Box, Typography, Grid2, Card, CardContent, Table, TableHead, TableRow, TableCell, TableBody } from "@mui/material";
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
-import { PendingActions, PlayArrow, CheckCircle } from "@mui/icons-material";
+import { Box, Typography, Grid2, Card, CardContent, Table, TableHead, TableRow, TableCell, TableBody, Chip } from "@mui/material";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+import { PendingActions, Visibility, PlayArrow, CheckCircle } from "@mui/icons-material";
 import useLoadOptions from "../hooks/useLoadOptions";
+import Header from "/src/components/header/Header.jsx";
 
-const COLORS = ["#ffeb3b", "#ff9800", "#4caf50"];
+const STATUS_COLORS = {
+  "enviado ao supervisor": "warning",
+  "visualizado": "info",
+  "em andamento": "primary",
+  "finalizado": "success",
+  "pendente": "error"
+};
 
 const DashboardPage = () => {
-  const { carregarDashboard, solicitacoes } = useLoadOptions();
+  const { atividades, solicitacoes } = useLoadOptions();
+  
   const [dados, setDados] = useState({
-    solicitacoesPendentes: 10,
-    atividadesEmAndamento: 20,
-    atividadesConcluidas: 30,
+    solicitacoesPendentes: 0,
+    solicitacoesVisualizadas: 0,
+    atividadesEmAndamento: 0,
+    atividadesConcluidas: 0,
+    atividadesPendentes: 0,
   });
 
   useEffect(() => {
-    const carregarDados = async () => {
-      const response = await carregarDashboard();
-      if (response) {
-        setDados(response);
-      }
-    };
-    carregarDados();
-  }, []);
+    setDados({
+      solicitacoesPendentes: solicitacoes.reduce((contador, solicitacao) => 
+        solicitacao.status === "enviado ao supervisor" ? contador + 1 : contador, 0
+      ),
+      solicitacoesVisualizadas: solicitacoes.reduce((contador, solicitacao) => 
+        solicitacao.status === "visualizado" ? contador + 1 : contador, 0
+      ),
+      atividadesEmAndamento: atividades.reduce((contador, atividade) => 
+        atividade.status === "em andamento" ? contador + 1 : contador, 0
+      ),
+      atividadesConcluidas: atividades.reduce((contador, atividade) => 
+        atividade.status === "finalizado" ? contador + 1 : contador, 0
+      ),
+      atividadesPendentes: atividades.reduce((contador, atividade) => 
+        atividade.status === "pendente" ? contador + 1 : contador, 0
+      ),
+    });
+  }, [atividades, solicitacoes]);
 
-  const data = [
-    { name: "Pendentes", value: dados.solicitacoesPendentes },
+  const dataAtividades = [
+    { name: "Atividades Pendentes", value: dados.atividadesPendentes },
     { name: "Em andamento", value: dados.atividadesEmAndamento },
     { name: "Concluídas", value: dados.atividadesConcluidas },
   ];
@@ -33,12 +53,13 @@ const DashboardPage = () => {
   return (
     <Box p={3}>
       <Typography variant="h5" gutterBottom>
-        Dashboard
+        <Header titulo="Dashboard" />
       </Typography>
 
       <Grid2 container spacing={2}>
-        <Grid2 item xs={12} sm={4}>
-          <Card sx={{ backgroundColor: "#ffeb3b" }}>
+        {/* Cards com novas cores e ajustes */}
+        <Grid2 item xs={12} sm={3}>
+          <Card sx={{ backgroundColor: "#ff9800", color: "white" }}>
             <CardContent>
               <Typography variant="h6" display="flex" alignItems="center">
                 <PendingActions sx={{ mr: 1 }} /> Solicitações Pendentes
@@ -48,18 +69,18 @@ const DashboardPage = () => {
           </Card>
         </Grid2>
 
-        <Grid2 item xs={12} sm={4}>
-          <Card sx={{ backgroundColor: "#ff9800" }}>
+        <Grid2 item xs={12} sm={3}>
+          <Card sx={{ backgroundColor: "#2196f3", color: "white" }}>
             <CardContent>
               <Typography variant="h6" display="flex" alignItems="center">
-                <PlayArrow sx={{ mr: 1 }} /> Atividades em Andamento
+                <Visibility sx={{ mr: 1 }} /> Solicitações Visualizadas
               </Typography>
-              <Typography variant="h4">{dados.atividadesEmAndamento}</Typography>
+              <Typography variant="h4">{dados.solicitacoesVisualizadas}</Typography>
             </CardContent>
           </Card>
         </Grid2>
 
-        <Grid2 item xs={12} sm={4}>
+        <Grid2 item xs={12} sm={3}>
           <Card sx={{ backgroundColor: "#4caf50", color: "white" }}>
             <CardContent>
               <Typography variant="h6" display="flex" alignItems="center">
@@ -69,35 +90,31 @@ const DashboardPage = () => {
             </CardContent>
           </Card>
         </Grid2>
+
+        <Grid2 item xs={12} sm={3}>
+          <Card sx={{ backgroundColor: "#ff5722", color: "white" }}>
+            <CardContent>
+              <Typography variant="h6" display="flex" alignItems="center">
+                <PlayArrow sx={{ mr: 1 }} /> Atividades em Andamento
+              </Typography>
+              <Typography variant="h4">{dados.atividadesEmAndamento}</Typography>
+            </CardContent>
+          </Card>
+        </Grid2>
       </Grid2>
 
       <Box mt={4} display="flex" justifyContent="space-between">
-        <Box width="60%">
+        <Box width="100%">
           <Typography variant="h6" gutterBottom>
             Estatísticas de Atividades
           </Typography>
           <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={data}>
+            <BarChart data={dataAtividades}>
               <XAxis dataKey="name" />
               <YAxis allowDecimals={false} />
               <Tooltip />
               <Bar dataKey="value" fill="#1976d2" />
             </BarChart>
-          </ResponsiveContainer>
-        </Box>
-
-        <Box width="35%">
-          <Typography variant="h6" gutterBottom>
-            Distribuição de Atividades
-          </Typography>
-          <ResponsiveContainer width="100%" height={300}>
-            <PieChart>
-              <Pie data={data} dataKey="value" nameKey="name" outerRadius={100} label>
-                {data.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                ))}
-              </Pie>
-            </PieChart>
           </ResponsiveContainer>
         </Box>
       </Box>
@@ -119,7 +136,9 @@ const DashboardPage = () => {
               <TableRow key={solicitacao.id}>
                 <TableCell>{solicitacao.id}</TableCell>
                 <TableCell>{solicitacao.descricao}</TableCell>
-                <TableCell>{solicitacao.status}</TableCell>
+                <TableCell>
+                  <Chip label={solicitacao.status} color={STATUS_COLORS[solicitacao.status] || "default"} />
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
