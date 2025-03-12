@@ -15,6 +15,7 @@ import {
     EditarAmbiente,
     CadastrarAmbiente,
     ProfileAdmin,
+    Relatorios,
 } from '/src/view/admin';
 
 
@@ -103,6 +104,11 @@ export const routesAdmin = [
         name: 'Editar Ambiente',
         path: 'ambientes/editar/:ambienteId',
         element: <EditarAmbiente />,
+    },
+    {
+        name: 'Relatórios',
+        path: 'relatorios',
+        element: <Relatorios />,
     },
     {
         name: 'Perfil',

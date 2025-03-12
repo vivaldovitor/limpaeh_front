@@ -4,6 +4,7 @@ import {
   Container, CircularProgress, Typography, Card, CardContent, Box, Divider, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField 
 } from "@mui/material";
 import api from "@/services/api";
+import { useAuth } from "@/context/AuthContext";
 
 function Relatorio() {
   const { relatorioId } = useParams();
@@ -12,15 +13,24 @@ function Relatorio() {
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
   const [editedRelatorio, setEditedRelatorio] = useState({ descricao: "", observacao: "" });
-
+  const { user } = useAuth();
+  
   useEffect(() => {
     const fetchRelatorio = async () => {
       try {
         const response = await api.get(`/relatorio/${relatorioId}`);
-        setRelatorio(response.data.relatorio);
+        const data = response.data.relatorio;
+
+        if (data.funcionario_id !== user.id) {
+          alert("Acesso negado. Você não tem permissão para visualizar este relatório.");
+          navigate(-1);
+          return;
+        }
+
+        setRelatorio(data);
         setEditedRelatorio({
-          descricao: response.data.relatorio.descricao,
-          observacao: response.data.relatorio.observacao
+          descricao: data.descricao,
+          observacao: data.observacao
         });
       } catch (error) {
         console.error("Erro ao carregar o relatório:", error);
@@ -31,7 +41,7 @@ function Relatorio() {
     };
 
     fetchRelatorio();
-  }, [relatorioId]);
+  }, [relatorioId, user.id, navigate]);
 
   const handleEditar = () => {
     setOpen(true);

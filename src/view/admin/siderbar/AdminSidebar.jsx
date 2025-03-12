@@ -7,6 +7,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import PersonIcon from '@mui/icons-material/Person';
 import Sidebar from '../../../components/sidebar/Sidebar';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import AssignmentIcon from '@mui/icons-material/Assignment';
 
 const AdminSidebar = () => {
   const token = localStorage.getItem('token');
@@ -26,6 +27,9 @@ const AdminSidebar = () => {
     },
     {
       text: 'Ambientes', icon: <LocationOnIcon />, path: '/admin/ambientes' 
+    },
+    {
+      text: 'Relatórios', icon:  <AssignmentIcon />, path: '/admin/relatorios' 
     },
     { 
       text: 'Perfil', icon: <PersonIcon/>, path: '/admin/perfil' 

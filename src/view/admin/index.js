@@ -22,3 +22,5 @@ export { default as CadastrarAmbiente} from './layout/ambientes/components/Cadas
 
 // Perfil
 export { default as ProfileAdmin } from './profile/ProfileAdmin';
+
+export { default as Relatorios } from './layout/relatorios/Relatorios';
