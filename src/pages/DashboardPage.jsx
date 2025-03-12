@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Box, Typography, Grid2, Card, CardContent, Table, TableHead, TableRow, TableCell, TableBody, Chip } from "@mui/material";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
-import { PendingActions, Visibility, PlayArrow, CheckCircle } from "@mui/icons-material";
+import { PendingActions, Visibility, PlayArrow } from "@mui/icons-material";
 import useLoadOptions from "../hooks/useLoadOptions";
 import Header from "/src/components/header/Header.jsx";
 
@@ -52,13 +52,11 @@ const DashboardPage = () => {
 
   return (
     <Box p={3}>
-      <Typography variant="h5" gutterBottom>
-        <Header titulo="Dashboard" />
-      </Typography>
+      <Header titulo="Dashboard" />
 
       <Grid2 container spacing={2}>
-        {/* Cards com novas cores e ajustes */}
-        <Grid2 item xs={12} sm={3}>
+        {/* Cards ajustados */}
+        <Grid2 item xs={12} sm={4}>
           <Card sx={{ backgroundColor: "#ff9800", color: "white" }}>
             <CardContent>
               <Typography variant="h6" display="flex" alignItems="center">
@@ -69,7 +67,7 @@ const DashboardPage = () => {
           </Card>
         </Grid2>
 
-        <Grid2 item xs={12} sm={3}>
+        <Grid2 item xs={12} sm={4}>
           <Card sx={{ backgroundColor: "#2196f3", color: "white" }}>
             <CardContent>
               <Typography variant="h6" display="flex" alignItems="center">
@@ -80,18 +78,7 @@ const DashboardPage = () => {
           </Card>
         </Grid2>
 
-        <Grid2 item xs={12} sm={3}>
-          <Card sx={{ backgroundColor: "#4caf50", color: "white" }}>
-            <CardContent>
-              <Typography variant="h6" display="flex" alignItems="center">
-                <CheckCircle sx={{ mr: 1 }} /> Atividades Concluídas
-              </Typography>
-              <Typography variant="h4">{dados.atividadesConcluidas}</Typography>
-            </CardContent>
-          </Card>
-        </Grid2>
-
-        <Grid2 item xs={12} sm={3}>
+        <Grid2 item xs={12} sm={4}>
           <Card sx={{ backgroundColor: "#ff5722", color: "white" }}>
             <CardContent>
               <Typography variant="h6" display="flex" alignItems="center">
